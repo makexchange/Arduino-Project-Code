@@ -1,39 +1,12 @@
-/* Building on the code and wiring from the 'Intersection' project, this project will install a cross-walk signal
-showing pedestrians when it is safe to cross the intersection.
-
-The new crosswalk also includes an crosswalk signal light to tell pedestrians when it is safe and unsafe to cross by changing colors and flashing.
-
-While traffic is keeping the pedestrian from crossing the street, The signal light will shine a steady orange color. 
-Once the traffic has a red light, it will be safe to cross the street and the crosswalk signal light will shine white.
-
-After a few seconds, the signal light will begin to flash orange, telling the pedestrian that the light is about to change.
-Eventually, the other street's green light will turn yellow, then red. Once it turns red, the pedestrian signal light will 
-stop flashing and return to its original steady orange.
-
-Our new crosswalk also includes a button the pedestrian can press to immediately change the traffic light from green light to yellow
-and then red, allowing them to safely cross the street.*/
-
 const int buttonPin = 2;
 int buttonState = 0;
 
-// Traffic Light #1
-const int Green1 = 11;
-const int Yellow1 = 12;
-const int Red1 = 13; 
-
-// Traffic Light #2
-const int Green2 = 8;
-const int Yellow2 = 9;
-const int Red2 = 10;
+int NorthStreet[]={13,12,11};
+int WestStreet[]={10,9,8};
 
 // If you are using a common-anode RGB LED
 // you can change the below boolean to 'false'
 boolean common_cathode = true;
-
-// A common-cathode RGB LED works similarly to
-// other LEDs, with 0 being LOW and 255 being HIGH
-// For common-anode RGB LEDs the highest value (255)
-// stops the flow of electricity, turning off the color
 
 void setup() {
   // Loop through pins 3 through 13 setting each as OUTPUTs
@@ -47,13 +20,13 @@ void setup() {
 void loop() {
   // When Traffic Light #1 is green the pedestrians must wait to cross
   // Fortunately, they have a button they can use to speed things up
-  stopTimer(8000, Green1, Red2);
-  stopTimer(2000, Yellow1, Red2);
+  stopTimer(8000, NorthStreet[2], WestStreet[0]);
+  stopTimer(2000, NorthStreet[1], WestStreet[0]);
   
   // When Traffic Light #2 comes on the pedestrians can safely cross
-  goTimer(4000, Red1, Green2);
-  blinkTimer(4, 2000, Red1, Green2); 
-  stopTimer(2000, Red1, Yellow2);
+  goTimer(4000, NorthStreet[0], WestStreet[2]);
+  blinkTimer(4, 2000, NorthStreet[0], WestStreet[2]); 
+  stopTimer(2000, NorthStreet[0], WestStreet[1]);
 }
 
 void stopTimer(int duration, int light1, int light2 ) {
@@ -65,7 +38,7 @@ void stopTimer(int duration, int light1, int light2 ) {
   // for the length of the duration parameter  
   for (int x=0; x<duration; x++) {
     buttonState = digitalRead(buttonPin);
-    if (light1 == Green1 and buttonState == HIGH) {
+    if (light1 == NorthStreet[2] and buttonState == HIGH) {
       break; 
     } else {
       delay(1);   
@@ -86,11 +59,11 @@ void blinkTimer(int cycles, int duration, int light1, int light2 ) {
   // over (duration) seconds
   duration = (duration / cycles);
   lightsOut();
+  digitalWrite(light1, HIGH);
+  digitalWrite(light2, HIGH);
   for (int i=0; i<cycles; i++) {
     // Turn off the RGB LED
     walkLight(255, 255, 255);
-    digitalWrite(light1, HIGH);
-    digitalWrite(light2, HIGH);
     delay(duration);
     // Set the RGB LED to an orange-red color
     walkLight(10, 0, 255);

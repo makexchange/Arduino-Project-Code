@@ -1,15 +1,6 @@
 // Visit www.makexchange.com for exciting new coding projects
 // and to expand your inventing skills and knowledge.
 
-/*
- Using a potentiometer coupled with a temperature sensor to 
- create a thermostat.
-
- The potentiometer allows the user to set the temperature at
- which the fan should be turned on.
-
-*/
-
 int potpin = 0;  // Anaolog pin 0 measures potentiometer voltage
 int temppin = 1;  // Analog pin 1 measures the temperature sensor voltage.
 int fanpin = 9;  // Digital pin #9 turns the fan on or off

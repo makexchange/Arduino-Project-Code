@@ -1,8 +1,3 @@
-// Intersection
-/* This program controls two traffic lights, each with a red, yellow, and green 
-lamp controlling two different streets in a busy city intersection.
-
-*/
 int NorthStreet[]={13,12,11};
 int SouthStreet[]={10,9,8};
 int CrossWalk[]={7,6,5};
@@ -16,8 +11,7 @@ void setup(){
   for (int x=5; x<14; x++ ){ 
       pinMode(x, OUTPUT);
    }
-  
-  }
+}
 
 void loop(){
   // set the initial state of the lights
